@@ -20,6 +20,11 @@ object Skew extends Basic{
     case _=> 0
   }
 
+  /**
+   *
+   * @param str
+   * @return List of skew values in a reverse order (from end to zero)
+   */
   def skewReverse(str:String): List[Int] = str.foldLeft(0->List(0)){
     case ((max,acc),el)=>
       val m = this.skewChar(el)+max
@@ -30,9 +35,17 @@ object Skew extends Basic{
 
   //def skewReverse(str:String, i:Int,min:Int = 0):List[Int] = if(i<min) Nil else skew(str,i,min)::skewReverse(str,i-1,min)
 
+  /**
+   *
+   * @param str
+   * @return array of skew values with indexes
+   */
   def skewIndexed(str:String) = skewReverse(str).reverse.zipWithIndex//.minBy{case (el,i)=>el}._1
 
   def minSkew(ind:List[(Int,Int)]) = ind.minBy{case (el,i)=>el}._1
+
+  def maxSkew(ind:List[(Int,Int)]) = ind.maxBy{case (el,i)=>el}._1
+
 
   def minIndexes(ind:List[(Int,Int)]): List[Int] = {
     val m = minSkew(ind)

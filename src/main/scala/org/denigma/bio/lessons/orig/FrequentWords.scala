@@ -23,9 +23,9 @@ trait  FrequentWords {
    * Count numbers of kmers with hashmap inside
    * @param text
    * @param n
-   * @return
+   * @return hashmer of kmers together with their counts
    */
-  def counts(text:String,n:Integer) = {
+  def counts(text:String,n:Integer): mutable.HashMap[String, Int] = {
     import collection.mutable.HashMap
     val counts = new HashMap[String,Int]
     text.sliding(n).foreach(key=>counts.get(key) match {

@@ -1,5 +1,6 @@
 package org.denigma.bio.kmers
 
+import scala.collection.mutable
 import scala.collection.mutable.HashMap
 
 
@@ -7,7 +8,7 @@ object Mismatches extends Basic{
 
 
   /**
-   * Bruteforce hack to mutate strs
+   * Bruteforce hack to mutate generate mutated kmers
    * @param str
    * @return
    */
@@ -62,7 +63,15 @@ object Mismatches extends Basic{
     kmers
   }
 
-  def mostFrequent(text:String,k:Int,m:Int, withReverse:Boolean = false) = {
+  /**
+   *
+   * @param text
+   * @param k Kmer length
+   * @param m number of mismatches
+   * @param withReverse take into consideration reverse strange
+   * @return Iterable with most frequent kmers with mismatches
+   */
+  def mostFrequent(text:String,k:Int,m:Int, withReverse:Boolean = false): mutable.Iterable[String] = {
     val res = this.frequencies(text,k,m,withReverse)
     val max = res.values.maxBy(v=>v.size).size
     res.collect{case (key,value) if value.size==max=>key}
