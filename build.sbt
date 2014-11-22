@@ -13,11 +13,16 @@ scalaVersion := "2.11.4"
 
 bintraySettings
 
+// Scalaxy snapshots are published on the Sonatype repository.
+resolvers += Resolver.sonatypeRepo("snapshots")
+
 resolvers += Opts.resolver.repo("denigma", "denigma-releases")
+
+resolvers += Opts.resolver.repo("denigma", "bio")
 
 resolvers += "BioJava repository" at "http://www.biojava.org/download/maven/"
 
-libraryDependencies += "me.shadaj" %% "genalgo" % "0.1.3"
+libraryDependencies += "me.shadaj" %% "genalgo" % "0.1.3.1"
 
 libraryDependencies += "org.scalanlp" %% "breeze" % "0.8.1"
 
@@ -28,10 +33,17 @@ libraryDependencies += "org.biojava" % "biojava3-core" % biojavaVersion
 
 libraryDependencies += "org.biojava" % "biojava3-genome" % biojavaVersion
 
-
+libraryDependencies += "com.github.benhutchison" %% "microjson" % "1.0"
 
 libraryDependencies += "org.scala-saddle" %% "saddle-core" % "1.3.3"
 
-//libraryDependencies += "com.nativelibs4java" %% "scalaxy-streams" % "0.3.3"
+val scalaxyVersion = "0.4-SNAPSHOT"
 
-libraryDependencies += "com.github.scala-blitz" % "scala-blitz_2.11" % "1.2"
+libraryDependencies += "com.nativelibs4java" %% "scalaxy-loops" % scalaxyVersion
+
+libraryDependencies += "com.nativelibs4java" %% "scalaxy-streams" % scalaxyVersion
+
+
+libraryDependencies += "com.github.scala-blitz" %% "scala-blitz" % "1.2"
+
+libraryDependencies += "com.softwaremill.macwire" %% "macros" % "0.7.3"

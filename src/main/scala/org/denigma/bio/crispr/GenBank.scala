@@ -1,4 +1,4 @@
-package org.bionic.crispr
+package org.denigma.bio.crispr
 
 import java.io.File
 import java.net.URI
