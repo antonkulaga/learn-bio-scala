@@ -3,24 +3,21 @@ package org.denigma.bio.kmers
 import scala.collection.mutable
 import scala.collection.mutable.HashMap
 
-
-object Mismatches extends Basic{
-
-
+class Mismatcher extends Basic{
   /**
    * Bruteforce hack to mutate generate mutated kmers
    * @param str
    * @return
    */
   def mutate(str: String): Set[String] =     str.indices.flatMap { idx =>
-      Set(str.updated(idx, 'A'), str.updated(idx, 'T'), str.updated(idx, 'G'), str.updated(idx, 'C'))
-    }.toSet
+    Set(str.updated(idx, 'A'), str.updated(idx, 'T'), str.updated(idx, 'G'), str.updated(idx, 'C'))
+  }.toSet
 
 
   def mismatches(str: String, d: Int): Set[String] =  (str, d) match {
-      case (s, 0) => Set(s)
-      case (s, n) => mutate(s) flatMap(mismatches(_, n-1))
-    }
+    case (s, 0) => Set(s)
+    case (s, n) => mutate(s) flatMap(mismatches(_, n-1))
+  }
 
 
 
@@ -32,9 +29,6 @@ object Mismatches extends Basic{
 
 
 
-  def withMismatchers(key:String,m:Int):Set[String] =  mismatches(key,m)+key
-
-
   /**
    *
    * @param text dna
@@ -42,16 +36,16 @@ object Mismatches extends Basic{
    * @param m number of mistaches
    * @return
    */
-  def frequencies(text:String, k:Int,m:Int, withReverse:Boolean = false) =
+  def frequencies(text:String, k:Int,m:Int, withReverse:Boolean = false): mutable.HashMap[String, List[Int]] =
   {
     import collection.mutable.HashMap
     val kmers = new HashMap[String,List[Int]] //place to store kmers positions
 
     def addKmer(k:String,index:Int) =  kmers.get(k) match {
-        case Some(list) =>
-          kmers.update(k, index :: list)
-        case None =>
-          kmers += (k -> List(index))
+      case Some(list) =>
+        kmers.update(k, index :: list)
+      case None =>
+        kmers += (k -> List(index))
     }
     text.sliding(k).zipWithIndex.foreach{  case (key,index)=>
       this.withMismatchers(key,m).foreach{case r=>
@@ -78,4 +72,11 @@ object Mismatches extends Basic{
   }
 
 
+  def withMismatchers(key:String,m:Int):Set[String] =  mismatches(key,m)+key
+
 }
+
+
+
+
+object Mismatches extends Mismatcher

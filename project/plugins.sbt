@@ -30,4 +30,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.8.0-RC1")
 
 addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.2")
 
+addSbtPlugin("com.github.alexarchambault" %% "sbt-notebook" % "0.1.1")
+
 
